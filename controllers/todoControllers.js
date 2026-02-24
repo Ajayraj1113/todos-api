@@ -96,4 +96,24 @@ exports.updateTodo = async (req, res) => {
     });
   }
 };
+
 // delete todo
+exports.deleteTodo = async (req, res) => {
+  try {
+    const todo = await Todo.findByIdAndDelete(req.params.id);
+
+    if (!todo) {
+      return res.status(404).json({
+        msg: "No todo found!!",
+      });
+    }
+
+    return res.status(200).json({
+      msg: "todo deleted!!",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      msg: error.message,
+    });
+  }
+};
