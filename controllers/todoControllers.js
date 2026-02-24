@@ -74,4 +74,26 @@ exports.getSingleTodo = async (req, res) => {
 };
 
 // update todo
+exports.updateTodo = async (req, res) => {
+  try {
+    const todo = await Todo.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
+
+    if (!todo) {
+      return res.status(404).json({
+        msg: "No todo found!!",
+      });
+    }
+
+    res.status(200).json({
+      msg: "todo upadated!!",
+      todo,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      msg: error.message,
+    });
+  }
+};
 // delete todo
